@@ -11,19 +11,37 @@ export const Test = () => {
     }, [])
 
     function test() {
+        //countingSort
+        let array = [1,1,3,2,1];
+
+        console.log('countingSort', countingSort(array));
+        //-----------------------------------------------------------------------------
         //diagonalDifference
-        let array = Array(4);
+        array = Array(4);
         array[0] = [-1,1,-7,-8];
         array[1] = [-10,-8,-5,-28];
         array[2] = [0,9,7,-1];
         array[3] = [4,4,-2,1];
         console.log('diagonalDifference', diagonalDifference(array) );
 
-
+        //-----------------------------------------------------------------------------
         //lonelyinteger
         let integers = [1,2,3,4,3,2,1];
         console.log('lonelyinteger', lonelyinteger( integers ));
+        //-----------------------------------------------------------------------------
     }
+
+    function countingSort(array) {
+        let countingArray = Array(100).fill(0);
+        for (let i=0; i<array.length; i++) {
+            let number = array[i];
+            if (number >= 0 || number <= 100) {
+                countingArray[number]++;
+            }
+        }
+        return countingArray;
+    }
+    
 
     function diagonalDifference(array) {
         let rightDiagonalSum = 0;
