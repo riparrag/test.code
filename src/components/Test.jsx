@@ -8,13 +8,22 @@ export const Test = () => {
         test();
 
         console.log('Fin Test.');
-    }, [])
+    });
 
     function test() {
+        let array = [5,3,4,2,1];
+        console.log('findMedian', findMedian(array) );
+
+        //-----------------------------------------------------------------------------
+        //processData
+        //processData();
+        
+        //-----------------------------------------------------------------------------
         //countingSort
-        let array = [1,1,3,2,1];
+         array = [1,1,3,2,1];
 
         console.log('countingSort', countingSort(array));
+
         //-----------------------------------------------------------------------------
         //diagonalDifference
         array = Array(4);
@@ -30,6 +39,14 @@ export const Test = () => {
         console.log('lonelyinteger', lonelyinteger( integers ));
         //-----------------------------------------------------------------------------
     }
+
+    function findMedian(arr) {
+    
+        arr.sort( (a,b) => a - b );
+    
+        return arr[ Math.floor(arr.length/2) ];
+    }
+
 
     function countingSort(array) {
         let countingArray = Array(100).fill(0);
@@ -86,3 +103,5 @@ export const Test = () => {
         <div>Test</div>
     )
 }
+
+export default Test;
