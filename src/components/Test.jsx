@@ -46,6 +46,9 @@ export const Test = () => {
 */
     }
 
+    function test2(arr) {
+    }
+    
     function findMedian(arr) {
     
         arr.sort( (a,b) => a - b );
