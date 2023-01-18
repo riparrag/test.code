@@ -10,9 +10,45 @@ export const Test = () => {
         console.log('Fin Test.');
     });
 
+    function examen(array) {
+        console.log('examen');
+        const initialTeamList = [
+            { name: 'Team1',
+              channels: [
+                { name: 'Channel1',
+                  id: 1
+                },
+                { name: 'Channel2',
+                  id: 2
+                }
+              ]
+            },
+            { name: 'Team2',
+              channels: [
+                { name: 'Channel1',
+                  id: 1
+                },
+                { name: 'Channel2',
+                  id: 2
+                }
+              ]
+            }
+          ];
+          let channelList = initialTeamList[0].channels;
+          var channelFounded = channelList.find((channel) => {
+            return channel.id === id
+        });
+        if (channelFounded) {
+          channelList.indexOf(channelFounded);
+        }
+    }
+
     function test() {
-        //-----------------------------------------------------------------------------
         let array = Array(4);
+        examen(array);
+
+        //-----------------------------------------------------------------------------
+        array = Array(4);
         array[0] = [112, 42, 83, 119];
         array[1] = [56, 125, 56, 49];
         array[2] = [15, 78, 101, 43];
@@ -56,7 +92,7 @@ export const Test = () => {
         //-----------------------------------------------------------------------------
 */
     }
-
+/*--------------------------------------------------------------------------*/
     function flippingMatrix(matrix) {
         //reverse col 2
         for (let i=0; i < matrix.length/2; i++) {
@@ -78,14 +114,14 @@ export const Test = () => {
         }
         return sum;
     }
-    
+/*--------------------------------------------------------------------------*/
     function findMedian(arr) {
     
         arr.sort( (a,b) => a - b );
     
         return arr[ Math.floor(arr.length/2) ];
     }
-
+/*--------------------------------------------------------------------------*/
     function fizzBuzz(n) {
         for (let i=1; i<=n; i++) {
             let isMultipleOf3 = i % 3 == 0;
@@ -108,7 +144,7 @@ export const Test = () => {
             }
         }
     }
-
+/*--------------------------------------------------------------------------*/
     function countingSort(array) {
         let countingArray = Array(100).fill(0);
         for (let i=0; i<array.length; i++) {
@@ -119,8 +155,7 @@ export const Test = () => {
         }
         return countingArray;
     }
-    
-
+/*--------------------------------------------------------------------------*/
     function diagonalDifference(array) {
         let rightDiagonalSum = 0;
         let leftDiagonalSum = 0;
@@ -132,7 +167,7 @@ export const Test = () => {
 
         return Math.abs( rightDiagonalSum - leftDiagonalSum );
     }
-
+/*--------------------------------------------------------------------------*/
     function lonelyinteger(integers) {
         let map = new Map();
 
@@ -159,6 +194,120 @@ export const Test = () => {
         }
         return found
     }
+/*--------------------------------------------------------------------------*/
+    /*
+    * Complete the 'timeConversion' function below.
+    * The function is expected to return a STRING.
+    * The function accepts STRING s as parameter.
+    */
+    function timeConversion(time) {
+        const AM = 'AM';
+        const PM = 'PM';
+
+        if (time.length != 10) {
+            throw new Error(`time string must have 10 digits like 07:05:45PM`);
+        }
+        if (![AM,PM].includes(time.substring(8,10))) {
+            throw new Error(`time string must ends with ${AM} or ${PM}`);
+        }
+        let amPmFormat = time.substring(8,10);
+        time = time.substring(0,8);
+        let timeArray = time.split(':')
+        if (timeArray.length != 3) {
+            throw new Error(`time string must have format HH:mm:ssAA`);
+        }
+        let hour = parseInt(timeArray[0]);
+
+        if (hour > 12) {
+            throw new Error('hour must be in AM between 0 and 12')
+        }
+
+        switch (amPmFormat) {
+            case AM:
+                if (hour == 12) hour = 0;
+                break;
+
+            case PM:
+                hour += 12;
+                if (hour == 24) hour = 12;
+                break;
+        }
+        return `${hour.toString().padStart(2,'0')}:${timeArray[1]}:${timeArray[2]}`;
+    }
+/*--------------------------------------------------------------------------*/
+    /*
+    * Complete the 'miniMaxSum' function below
+    * The function accepts INTEGER_ARRAY arr as parameter.
+    */
+    function miniMaxSum(array) {
+        let maxMinSum = {
+            maxSum: null,
+            minSum: null
+        }
+        for (let i=0; i<array.length; i++) {  
+            let sum = sumOthers(array,i);//sum others but this element
+            if (maxMinSum.maxSum == null || sum > maxMinSum.maxSum) {
+                maxMinSum.maxSum = sum;
+            }
+            if (maxMinSum.minSum == null || sum < maxMinSum.minSum) {
+                maxMinSum.minSum = sum;
+            }
+        }
+        console.log(`${maxMinSum.minSum} ${maxMinSum.maxSum}`);
+    }
+
+    function sumOthers(array, index) {
+        let sum = 0;
+        array.forEach(function(number, i) {
+            if (i != index) {
+            sum += number;
+            }
+        })
+        return sum;
+    }
+/*--------------------------------------------------------------------------*/
+    /*
+    * Complete the 'plusMinus' function below.
+    * The function accepts INTEGER_ARRAY arr as parameter.
+    */
+    function plusMinus(array) {
+        if (array.length <= 0) {
+            throw new Error("array must have elements");
+        }
+        if (array.length > 100) {
+            throw new Error("array cannot have more than 100 elements");
+        }
+        let plusMinusRatios = {
+            positives: 0,
+            negatives: 0,
+            zeros: 0,
+            positivesRatio:0,
+            negativesRatio:0,
+            zerosRatio:0
+        }
+        for (let i=0; i<array.length; i++) {
+            detectRightRatio(array[i], plusMinusRatios);
+        }
+        plusMinusRatios.positivesRatio = plusMinusRatios.positives/array.length;
+        plusMinusRatios.negativesRatio = plusMinusRatios.negatives/array.length;
+        plusMinusRatios.zerosRatio = plusMinusRatios.zeros/array.length;
+        console.log( plusMinusRatios.positivesRatio.toFixed(6) );
+        console.log( plusMinusRatios.negativesRatio.toFixed(6) );
+        console.log( plusMinusRatios.zerosRatio.toFixed(6) );
+    }
+
+    function detectRightRatio(number, plusMinusRatios) {
+        if (number > 0) {
+        plusMinusRatios.positives++;
+        }
+        if (number < 0) {
+        plusMinusRatios.negatives++;
+        }
+        if (number == 0) {
+        plusMinusRatios.zeros++;
+        }
+    }
+/*--------------------------------------------------------------------------*/
 
     return (
         <div>Test</div>

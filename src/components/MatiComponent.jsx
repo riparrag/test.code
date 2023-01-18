@@ -12,15 +12,14 @@ export default function MatiComponent(props) {
     
     return (
         <div>
-            <hr/>
             <h1>Component {name}</h1>
             <Image src={ReactIconMati} rounded={true} fluid={true} width='150px'/>
             
             <Button onClick={() => {saludo(name); setCantDeSaludos(cantDeSaludos+1);}}>saludar</Button>
             <h3>Cantidad de saludos: {cantDeSaludos}</h3>
+            <article>{props.children}</article>
             <hr/>
             <JazComponent {...props}/>
-            <hr/>
         </div>
     );
 }
@@ -33,6 +32,7 @@ export function JazComponent(props) {
             <Image src={ReactIconJaz} rounded={true} fluid={true} width='150px'/>
             <Button variant="outline-danger" onClick={() => {props.saludo('jaz'); setCantDeSaludosDeJaz(cantDeSaludosDeJaz+1);}}>saludar</Button>
             <h3>Cantidad de saludos: {cantDeSaludosDeJaz}</h3>
+            <article>{props.children}</article>
         </>
     );
 }
